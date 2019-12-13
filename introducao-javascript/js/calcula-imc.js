@@ -1,5 +1,5 @@
 var titulo = document.querySelector(".titulo");
-titulo.textContent = "Davi Nutricionista";
+titulo.textContent = "Davi Nutricionista(versão 1.02)";
 
 
 
