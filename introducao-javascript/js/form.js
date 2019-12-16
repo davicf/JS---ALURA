@@ -9,11 +9,10 @@ botaoAdicionar.addEventListener("click", function(event){
     
     var pacienteTr = montaTr(paciente);
 
-    var erro = validaPaciente(paciente);
-
-    if(erro.length > 0) {
-        var mensagemErro = document.querySelector("#mensagem-erro");
-        mensagemErro.textContent = erro;
+    var erros = validaPaciente(paciente);
+    console.log(erros);
+    if(erros.length > 0) {
+        exibeMensagensDeErro(erros);        
         return;
     }
     //adicionando o paciente na tabela
@@ -21,8 +20,21 @@ botaoAdicionar.addEventListener("click", function(event){
 
     tabela.appendChild(pacienteTr);
     form.reset();
+    var mensagensErro = document.querySelector("#mensagens-erro");
+    //innerHTML edita todo conteúdo de texto, incluindo tags, atributos, classe e etc.
+    mensagensErro.innerHTML = ""; //Apaga as mensagens de erro após um cadastro con sucesso.
+});
+
+function exibeMensagensDeErro(erros){
+    var ul = document.querySelector("#mensagens-erro");
+    ul.innerHTML = ""; //Apaga as antigas mensagens de erro pelas novas.
+
+    erros.forEach(function(erro){
+        var li = document.createElement("li");
+        li.textContent = erro;
+        ul.appendChild(li);
+    });
 }
-);
 
 // Extraindo informações do paciente do form
 function obtemPacienteDoFormulario(form){
@@ -65,10 +77,22 @@ function validaPaciente(paciente){
     var erros = [];
 
     if(!validaPeso(paciente.peso)) 
-        erros.push("Peso inválido");
+        erros.push("Peso inválido"); //push => empurra um valor para o array.
 
     if(!validaAltura(paciente.altura)) 
-        erros.push("Altura inválida");    
+        erros.push("Altura inválida");  
+        
+    if(paciente.nome.length == 0)
+        erros.push("O nome não pode ser em branco");
+
+    if(paciente.gordura.length == 0)
+        erros.push("A gordura não pode ser em branco");
+
+    if(paciente.peso.length == 0)
+        erros.push("Peso não pode ser em branco");
+    
+    if(paciente.altura.length == 0)
+        erros.push("Altura não pode ser em branco");
 
     return erros;
 }
