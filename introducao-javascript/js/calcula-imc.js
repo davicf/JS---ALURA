@@ -1,5 +1,5 @@
 var titulo = document.querySelector(".titulo");
-titulo.textContent = "Davi Nutricionista(versão 1.03)";
+titulo.textContent = "Davi Nutricionista(versão 1.04)";
 
 
 
@@ -17,17 +17,17 @@ for(var i = 0 ; i < pacientes.length; i++) {
 
     tdImc = paciente.querySelector(".info-imc");
 
-    var pesoCheck = true;
-    var alturaCheck = true;
+    var pesoCheck = validaPeso(peso);
+    var alturaCheck = validaAltura(altura);
 
-    if(peso <= 0 || peso >= 1000){
+    if(!pesoCheck){
         console.log("Peso inválido");
         pesoCheck = false;
         tdImc.textContent = "Peso Inválido!";
         paciente.classList.add("paciente-invalido");
     }
 
-    if(altura <= 0 || altura >= 3.00){
+    if(!alturaCheck){
         console.log("Altura inválido");
         alturaCheck = false;
         tdImc.textContent = "Altura Inválida!";
@@ -38,6 +38,23 @@ for(var i = 0 ; i < pacientes.length; i++) {
         var imc = calculaImc(peso, altura);
         tdImc.textContent = imc;
     }    
+}
+
+function validaPeso(peso){
+
+    if(peso >= 0 && peso < 1000.0)
+        return true;
+    else
+        return false;
+}
+
+function validaAltura(altura){
+
+    if(altura >= 0 && altura <= 3.00)
+        return true;
+    else
+        return false;
+
 }
 
 function calculaImc(peso, altura){
